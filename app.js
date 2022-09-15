@@ -1,10 +1,28 @@
 "use strict";
-const skill = [1, 'Dev'];
-const id = skill[0];
-const skillName = skill[1];
-const [newId, newSkillName] = skill;
-console.log(newId, newSkillName);
-skill.push('tratata');
-skill.push('trututu');
-console.log(skill.pop());
-// const tratata = skill[2]; //error
+var StatusCode;
+(function (StatusCode) {
+    StatusCode[StatusCode["SUCCESS"] = 1] = "SUCCESS";
+    StatusCode["IN_PROCESS"] = "p";
+    StatusCode["FAILED"] = "f";
+})(StatusCode || (StatusCode = {}));
+;
+const res = {
+    message: 'added succesfully',
+    statusCode: StatusCode.SUCCESS
+};
+// 1 - success
+// p - processing
+// f - failed
+if (res.statusCode === StatusCode.SUCCESS) {
+}
+function action(status) {
+}
+;
+action(StatusCode.SUCCESS);
+action(1);
+// action('p'); // err
+function compute() {
+    return 3;
+}
+;
+const res2 = 1 /* Roles.ADMIN */;

@@ -1,13 +1,38 @@
-const skill: readonly [number, string] = [1, 'Dev'];
+enum StatusCode {
+    SUCCESS = 1,
+    IN_PROCESS = 'p',
+    FAILED = 'f'
 
-// skill[0] = 1; err
+};
 
-const skills: readonly string[] = ['a', 'b', 'c'];
+const res = {
+    message: 'added succesfully',
+    statusCode: StatusCode.SUCCESS
+}
 
-// readonly - const for array
-// skills.push('d'); err
+// 1 - success
+// p - processing
+// f - failed
 
-// skills[0] = 't'; err
+if (res.statusCode === StatusCode.SUCCESS) {
 
-const newSkills: Array<string> = ['a', 'b', 'c']; // generic string[]
-const ROnewSkills: ReadonlyArray<string> = ['a', 'b', 'c']; // generic readonly string[]
+}
+
+function action(status: StatusCode) {
+
+};
+
+action(StatusCode.SUCCESS);
+action(1);
+// action('p'); // err
+
+function compute() {
+    return 3;
+}
+
+const enum Roles{
+    ADMIN =1,
+    USER = 2
+};
+
+const res2 = Roles.ADMIN;
