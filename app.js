@@ -1,10 +1,10 @@
 "use strict";
-const skills = ['Dev', 'DevOps', 'Testing'];
-for (const skill of skills) {
-    console.log(skill.toLowerCase());
-}
-const res = skills
-    .filter((s) => s !== 'DevOps')
-    .map(s => s + '! ')
-    .reduce((a, b) => a + b);
-console.log(res);
+const skill = [1, 'Dev'];
+const id = skill[0];
+const skillName = skill[1];
+const [newId, newSkillName] = skill;
+console.log(newId, newSkillName);
+skill.push('tratata');
+skill.push('trututu');
+console.log(skill.pop());
+// const tratata = skill[2]; //error
