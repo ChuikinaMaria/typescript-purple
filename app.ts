@@ -1,14 +1,13 @@
-const skill: [number, string] = [1, 'Dev'];
-const id = skill[0];
-const skillName = skill[1];
+const skill: readonly [number, string] = [1, 'Dev'];
 
-const [newId, newSkillName] = skill;
-console.log(newId, newSkillName);
+// skill[0] = 1; err
 
-const arr: [number, string, ...boolean[], number] = [1, "tururu", true, false, true, true, 1];
+const skills: readonly string[] = ['a', 'b', 'c'];
 
-skill.push('tratata');
-skill.push('trututu');
-console.log(skill.pop());
+// readonly - const for array
+// skills.push('d'); err
 
-// const tratata = skill[2]; //error
+// skills[0] = 't'; err
+
+const newSkills: Array<string> = ['a', 'b', 'c']; // generic string[]
+const ROnewSkills: ReadonlyArray<string> = ['a', 'b', 'c']; // generic readonly string[]
