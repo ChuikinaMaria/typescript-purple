@@ -1,15 +1,15 @@
 "use strict";
-const arr = ['dfg', 1];
-function logId(id) {
-    if (typeof id === 'string') {
-        console.log(id.toLowerCase());
-    }
-    else if (typeof id === 'number') {
-        console.log(id + 154);
-    }
-    else
-        console.log(id);
+function fetchWithAuth(url, method) {
 }
-logId(1);
-logId('Masha');
-logId(true);
+;
+function fetchWithAuth_typeReturn(url, method) {
+    return 1;
+}
+;
+fetchWithAuth('s', 'post');
+// fetchWithAuth('s', 'p'); // ошибка, не тот литеральный тип
+let method = 'post';
+//fetchWithAuth('s', method); ошибка типа
+fetchWithAuth('s', method);
+method = 'another string';
+fetchWithAuth('s', method);
