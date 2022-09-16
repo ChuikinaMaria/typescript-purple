@@ -1,8 +1,5 @@
 "use strict";
 function fetchWithAuth(url, method) {
-}
-;
-function fetchWithAuth_typeReturn(url, method) {
     return 1;
 }
 ;

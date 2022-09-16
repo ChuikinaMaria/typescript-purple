@@ -1,17 +1,48 @@
-function fetchWithAuth(url: string, method: "post" | 'get') {
+type httpMethod = 'post' | 'get';
 
-};
-function fetchWithAuth_typeReturn(url: string, method: "post" | 'get'): 1 | -1 { 
+type coolString = string;
+
+function fetchWithAuth(url: string, method: httpMethod): 1 | -1 { 
     return 1
 };
 
+let user: {
+    name: string,
+    age: number,
+    skills: string[]
+} = {
+    name: 'Sasha',
+    age: 33,
+    skills: ['1', '2']
+};
 
-fetchWithAuth('s', 'post'); 
-// fetchWithAuth('s', 'p'); // ошибка, не тот литеральный тип
+type User = {
+    name: string,
+    age: number,
+    skills: string[]
+};
 
+let newUser: User = {
+    name: 'Dasha',
+    age: 34,
+    skills: ['3', '4']
+}
 
-let method = 'post';
-//fetchWithAuth('s', method); ошибка типа
-fetchWithAuth('s', method as 'post');
-method = 'another string';
-fetchWithAuth('s', method as 'post');
+type Role = {
+    name: string
+    id: number
+};
+
+type UserWithRole = User & Role;
+type UserWithRoleTwoNames = {
+    user: User,
+    role: Role
+}
+
+let newUserWithRole: UserWithRole = {
+    name: 'Sasha',
+    age: 33,
+    skills: ['1', '2'],
+    id: 1
+
+}
