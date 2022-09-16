@@ -1,43 +1,48 @@
-interface User {
+type httpMethod = 'post' | 'get';
+
+type coolString = string;
+
+function fetchWithAuth(url: string, method: httpMethod): 1 | -1 { 
+    return 1
+};
+
+let user: {
     name: string,
     age: number,
     skills: string[]
-
-    log: (id: number) => string;
+} = {
+    name: 'Sasha',
+    age: 33,
+    skills: ['1', '2']
 };
 
-type func = {
-    log: (id: number) => string;
-} 
+type User = {
+    name: string,
+    age: number,
+    skills: string[]
+};
 
-interface Role {
-    roleId: number
-}
-
-interface UserWithRole extends User, Role {
-    createdAt: Date;
-}
-
-let user: UserWithRole = {
+let newUser: User = {
     name: 'Dasha',
     age: 34,
-    skills: ['3', '4'],
-    roleId: 1,
-    createdAt: new Date(),
+    skills: ['3', '4']
+}
 
-    log(roleId) {
-        return '';
-    }
+type Role = {
+    name: string
+    id: number
 };
 
-interface UserDict {
-    [index:number]: User
-};
+type UserWithRole = User & Role;
+type UserWithRoleTwoNames = {
+    user: User,
+    role: Role
+}
 
-type UserDict2 = {
-    [index:number]: User
-};
+let newUserWithRole: UserWithRole = {
+    name: 'Sasha',
+    age: 33,
+    skills: ['1', '2'],
+    id: 1
 
-type ud = Record<number, User>
-
-// interface IUser = []  - название с I, название с I, чтобы не путать с классами
+}
