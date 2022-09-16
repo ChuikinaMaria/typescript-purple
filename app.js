@@ -1,28 +1,15 @@
 "use strict";
-var StatusCode;
-(function (StatusCode) {
-    StatusCode[StatusCode["SUCCESS"] = 1] = "SUCCESS";
-    StatusCode["IN_PROCESS"] = "p";
-    StatusCode["FAILED"] = "f";
-})(StatusCode || (StatusCode = {}));
-;
-const res = {
-    message: 'added succesfully',
-    statusCode: StatusCode.SUCCESS
-};
-// 1 - success
-// p - processing
-// f - failed
-if (res.statusCode === StatusCode.SUCCESS) {
+const arr = ['dfg', 1];
+function logId(id) {
+    if (typeof id === 'string') {
+        console.log(id.toLowerCase());
+    }
+    else if (typeof id === 'number') {
+        console.log(id + 154);
+    }
+    else
+        console.log(id);
 }
-function action(status) {
-}
-;
-action(StatusCode.SUCCESS);
-action(1);
-// action('p'); // err
-function compute() {
-    return 3;
-}
-;
-const res2 = 1 /* Roles.ADMIN */;
+logId(1);
+logId('Masha');
+logId(true);
