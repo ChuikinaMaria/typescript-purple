@@ -1,43 +1,21 @@
-interface User {
-    name: string,
-    age: number,
-    skills: string[]
-
-    log: (id: number) => string;
-};
-
-type func = {
-    log: (id: number) => string;
-} 
-
-interface Role {
-    roleId: number
+interface IUser {
+    name: string
 }
 
-interface UserWithRole extends User, Role {
-    createdAt: Date;
+interface IUser {  // классы имплементируют интерфейсы
+    age: number    // в большинстве случаев интерфейсы
 }
 
-let user: UserWithRole = {
-    name: 'Dasha',
-    age: 34,
-    skills: ['3', '4'],
-    roleId: 1,
-    createdAt: new Date(),
+const user: IUser = {
+    name: 'MAsha',
+    age: 37
+}
 
-    log(roleId) {
-        return '';
-    }
-};
+type ID = string | number; // type  всегда с несколькими типами
 
-interface UserDict {
-    [index:number]: User
-};
+interface IID {
+    ID: string | number;
+}
 
-type UserDict2 = {
-    [index:number]: User
-};
 
-type ud = Record<number, User>
-
-// interface IUser = []  - название с I, название с I, чтобы не путать с классами
+   
