@@ -1,39 +1,63 @@
-interface IUser {
-    login: string;
-    password?: string; // ? - пароль опционален
-}
- 
-
-const user: IUser = {
-    login: "á@a.ru",
-    password: '1'
+interface IPayment {
+    "sum": number;
+	"from": number;
+	"to": number;
 }
 
-function multiply(first: number, second?: number): number {
-    if (!second) {
-        return first*first;
-    } else
-    return first * second;
+// отделили сам запрос (выше) и обработку запроса (ниже)
+
+interface IPaymentRequest extends IPayment {};
+
+
+enum PaymentStatus {
+    SUCCES = "success",
+    FAILED = "failed",
 }
 
-function multiply_5(first: number, second: number = 5): number {
-    return first * second;
+//interface IPaymentRequest extends PaymentStatus {};
+
+interface IDataSuccess extends IPayment {
+		"databaseId": number,
+		}
+
+interface IDataFailed {
+   		"errorMessage": string,
+		"errorCode": number
 }
 
-console.log(multiply(3));
-console.log(multiply_5(3));
+interface IRespondSuccess {
+    status: PaymentStatus.SUCCES,
+    data: IDataSuccess
+}
 
-interface IUser_PRO {
-    login: string;
-    password?: {
-        type: 'primary' | 'secondary'
-    }
+interface IRespondFailed {
+    status: PaymentStatus.FAILED,
+    data: IDataFailed
 }
-function testPass(user: IUser_PRO) {
-    const t = user.password?.type; // const t = user.password? user.password.type : undefined;
-    const p = user.password!.type; // ! - точно будет password
 
-}
-function test(param?: string) {
-    const t = param?? multiply(5); // если нет param, то присваивается значение вычисления функции
-}
+//function get(): IRespondSuccess | IRespondFailed {};
+// функция которая будет обрабатывать respond
+
+// Запрос в виде платежа
+// {
+// 	"sum": 10000,
+// 	"from": 2,
+// 	"to": 4
+// }
+// // Ответ
+// {
+// 	"status": "success",
+// 	"data": {
+// 		"databaseId": 567,
+// 		"sum": 10000,
+// 		"from": 2,
+// 		"to": 4
+// 	}
+// },
+// {
+// 	"status": "failed",
+// 	"data": {
+// 		"errorMessage": "Недостаточно средств",
+// 		"errorCode": 4
+// 	}
+// }
