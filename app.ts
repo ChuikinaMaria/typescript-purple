@@ -1,63 +1,29 @@
-interface IPayment {
-    "sum": number;
-	"from": number;
-	"to": number;
+function logId (id: string | number): void {
+    console.log(id);
 }
 
-// отделили сам запрос (выше) и обработку запроса (ниже)
+const a = logId(3); // a: void
 
-interface IPaymentRequest extends IPayment {};
-
-
-enum PaymentStatus {
-    SUCCES = "success",
-    FAILED = "failed",
+function multiply(f: number, s?: number): number | void {
+    if (!s) {
+        return f * f;
+    }
 }
 
-//interface IPaymentRequest extends PaymentStatus {};
+type voidFunc = () => void;
 
-interface IDataSuccess extends IPayment {
-		"databaseId": number,
-		}
+const f1: voidFunc = () => {};
+const f2: voidFunc = () => {
+    return true;
+}
+const b = f2();
 
-interface IDataFailed {
-   		"errorMessage": string,
-		"errorCode": number
+const skills = ["Dev", "DevOps"];
+const user = {
+    s: ['s']
 }
 
-interface IRespondSuccess {
-    status: PaymentStatus.SUCCES,
-    data: IDataSuccess
-}
-
-interface IRespondFailed {
-    status: PaymentStatus.FAILED,
-    data: IDataFailed
-}
-
-//function get(): IRespondSuccess | IRespondFailed {};
-// функция которая будет обрабатывать respond
-
-// Запрос в виде платежа
-// {
-// 	"sum": 10000,
-// 	"from": 2,
-// 	"to": 4
-// }
-// // Ответ
-// {
-// 	"status": "success",
-// 	"data": {
-// 		"databaseId": 567,
-// 		"sum": 10000,
-// 		"from": 2,
-// 		"to": 4
-// 	}
-// },
-// {
-// 	"status": "failed",
-// 	"data": {
-// 		"errorMessage": "Недостаточно средств",
-// 		"errorCode": 4
-// 	}
-// }
+skills.forEach((skill) => user.s.push(skill)); 
+// push добавляет э-т в массив и возвращает новую длину массива,
+// поэтому несовместим с forEach, который ничего не возвращает
+// void позволяет игнорировать возвращаемое значение
