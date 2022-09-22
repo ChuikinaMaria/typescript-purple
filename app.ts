@@ -1,45 +1,30 @@
-function generateError (message: string): never { // никогда не возвращается
-    throw new Error(message);
+const n: null = null;
+const n1: any = null;
+const n2: number = null;
+const n3: string = null;
+const n4: boolean = null;
+const n5: undefined = null;
+
+// "strictNullChecks": false in tsconfig.json , - no errors,
+// true - n2, n3, n4, n5 - error
+
+interface IUser{
+    name: string;
 }
 
-function dumpError():never {
-    // return "s"; // - ошибка, потоу что never никогда не возвращает
-    while(true) {}
-}
-
-function recurtion():never {
-    return recurtion();
-}
-
-// const a: never = 123;  // ошибка, не можем присвоить к never
-const a: void = undefined;
-
-type paymentAction = 'refund' | 'checkout' // | 'reject'; // при добавлении третьего варианта
-// проверка на тип never внизу не срабатывает и можно отловить ошибку на компайле, а не на ране
-
-function processAction(action: paymentAction) {
-    switch (action) {
-        case 'refund':
-            //...
-            break;
-        case 'checkout':
-            //...
-            break;
-        /*case 'reject':
-            //...
-            break;*/  // добавлением третьего кейса исправляем ошибку, добавив новое действие
-        default:
-            const _: never = action; // проверка на тип, action после switch - never 
-            throw new Error('fault action')
+function getUser() {
+    if (Math.random() > 0.5) {
+        return null; // null - осознанное отсутствие пользователя
+    } else {
+        return {
+            name: 'Masha'
+        } as IUser
     }
 }
 
-function isString(x: string | number): boolean{
-    if (typeof x === 'string') {
-        return true;
-    } else if(typeof x === 'number') {
-        return false;
-    }
-    generateError('oops'); // исчерпывающая проверка на undefined
+const user = getUser();
+if (user) {
+    const username = user.name;
 }
-
+// "strictNullChecks": true проверит, что иногда нет значения (первый ретерн) 
+// alt + up - перемещение строки
