@@ -1,11 +1,3 @@
-let a = 5;
-let b: string = a.toString();
-let e = new String(a).valueOf(); // без valueOF тип String (объект), а не string
-let f: boolean = new Boolean(a).valueOf();
-
-let c = 'fgh';
-let d: number = +c; // parseInt(c);
-
 interface IUser {
     name: string;
     email: string;
@@ -23,15 +15,31 @@ interface IAdmin {
     name: string;
     role: number;
 }
-
-const admin: IAdmin = {
-    ...user, // спред оператор берет все свойства из user и добавляет в admin
-    role: 1
-} // сохранит и другие свойства, хоть и не явно
-
-function userToAdmin(user: IUser): IAdmin {
-    return {
-        name: user.login, // можно присвоить значение другому ключу
-        role: 1
+function logId(id: string | number) {
+    if (isString(id)) {
+        console.log(id);
+    } else {
+        console.log(id);
     }
-} // полученный объект содержит только нужные поля, иначе объект бует шире, чем нужно.
+   }
+
+function isString(x: string | number): x is string {
+    return typeof x === 'string';
+}
+
+function isAdmin(user: IUser | IAdmin): user is IAdmin { // не работает асинхронно
+    return 'role' in user;
+    
+}
+
+function isAdminAlternative(user: IUser | IAdmin): user is IAdmin { // не работает асинхронно
+    return (user as IAdmin).role !== undefined; // если нет role, будет undefined
+}
+
+function setRoleZero(user: IUser | IAdmin) {
+    if (isAdmin(user)) {
+        user.role = 0;
+    } else {
+        throw new Error('User is not Admin');
+    }
+}
