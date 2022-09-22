@@ -1,29 +1,45 @@
-function logId (id: string | number): void {
-    console.log(id);
+let input: unknown;
+
+input = 3;
+input = ['sd', 'fgh'];
+
+// let res: string = input;   выдает ошибку, потому что unknown != string
+
+let input_any: any;
+input_any = 3;
+let res_any: string = input_any;  // не выдает ошибку, any можно записать в string
+
+function run(i: unknown) {
+    if (typeof i == 'number') {
+        i++
+    } else {
+        i
+    }
+
 }
 
-const a = logId(3); // a: void
+run(input);
 
-function multiply(f: number, s?: number): number | void {
-    if (!s) {
-        return f * f;
+// type assertion - проверка типа
+
+async function getData() {
+    try {
+        await fetch("");
+    } catch (error) {
+        // console.log(error.message); ошибка, нельзя обратиться к свойству unknown, к any можно было
+        if (error instanceof Error) {
+            console.log(error.message); // явная проверка, почти всегда
+        }
     }
 }
+async function getDataForce() {
+    try {
+        await fetch("");
+    } catch (error) {
+        const e = error as Error;
+        console.log(e.message); // выдаст ошибку если е != error
+        }
+    }
 
-type voidFunc = () => void;
-
-const f1: voidFunc = () => {};
-const f2: voidFunc = () => {
-    return true;
-}
-const b = f2();
-
-const skills = ["Dev", "DevOps"];
-const user = {
-    s: ['s']
-}
-
-skills.forEach((skill) => user.s.push(skill)); 
-// push добавляет э-т в массив и возвращает новую длину массива,
-// поэтому несовместим с forEach, который ничего не возвращает
-// void позволяет игнорировать возвращаемое значение
+type U1 = unknown | null; // union type with unknown always unknown
+type I1 = unknown & string; // intersection goes to narrow type, typeof I1 == string
