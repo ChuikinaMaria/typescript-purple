@@ -1,45 +1,45 @@
-interface IUser {
-    name: string;
-    email: string;
-    login: string;
+interface IPayment {
+	sum: number;
+	from: number;
+	to: number;
 }
 
-const user = //<IUSer> - не работает с React
- {
-    name: 'Masha',
-    email: 'Masha@ya.ru',
-    login: 'Masyanya'
-} as IUser;
-
-interface IAdmin {
-    name: string;
-    role: number;
-}
-function logId(id: string | number) {
-    if (isString(id)) {
-        console.log(id);
-    } else {
-        console.log(id);
-    }
-   }
-
-function isString(x: string | number): x is string {
-    return typeof x === 'string';
+enum PaymentStatus {
+	Success = 'success',
+	Failed = 'failed',
 }
 
-function isAdmin(user: IUser | IAdmin): user is IAdmin { // не работает асинхронно
-    return 'role' in user;
-    
+interface IPaymentRequest extends IPayment { }
+
+interface IDataSuccess extends IPayment {
+	databaseId: number;
 }
 
-function isAdminAlternative(user: IUser | IAdmin): user is IAdmin { // не работает асинхронно
-    return (user as IAdmin).role !== undefined; // если нет role, будет undefined
+interface IDataFailed {
+	errorMessage: string;
+	errorCode: number;
 }
 
-function setRoleZero(user: IUser | IAdmin) {
-    if (isAdmin(user)) {
-        user.role = 0;
-    } else {
-        throw new Error('User is not Admin');
-    }
+interface IResponseSuccess {
+	status: PaymentStatus.Success;
+	data: IDataSuccess;
+}
+
+interface IResponseFailed {
+	status: PaymentStatus.Failed;
+	data: IDataFailed;
+}
+
+type Res = IResponseSuccess | IResponseFailed;
+
+function isSuccess(res: Res): res is IResponseSuccess {
+    return res.status === PaymentStatus.Success;
+}
+
+function getIdFromData(res: Res): number {
+    if (isSuccess(res)) {
+        return res.data.databaseId;
+        } else{
+            throw new Error(res.data.errorMessage)
+        }
 }
