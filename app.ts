@@ -1,25 +1,34 @@
-class User {
-    name: string;
-    age: number;
-
-    constructor();
-    constructor(name: string);
-    constructor(age: number);
-    constructor(name: string, age: number); // для проверки на тип в компайлтайме
-
-    constructor(ageOrName?: string | number, age?: number) {  // конструктор имплементации
-        if (typeof ageOrName === 'string'){
-            this.name = ageOrName;
-        } else if (typeof ageOrName === 'number'){
-            this.age = ageOrName;
-        }
-        if (typeof age === 'number'){
-            this.age = age;
-
+enum PaymentStatus {
+    Holded,
+    Processed,
+    Reversed
 }
-}}
 
-const user = new User('Masha');
-const user1 = new User();
-const user2 = new User(33);
-const user3 = new User('Galya', 86);
+class Payment {
+    id: number;
+    status: PaymentStatus = PaymentStatus.Holded;
+    createdAt: Date = new Date;
+    updatedAt: Date;
+
+    constructor(id: number) {
+        this.id = id;
+    }
+
+    getPaymentLifeTime(): number {
+        return new Date().getTime() - this.createdAt.getTime();
+    }
+
+    unholdPayment(): void {
+        if (this.status == PaymentStatus.Processed) {
+            throw new Error("payment is already done")
+        }
+        this.status = PaymentStatus.Reversed;
+        this.updatedAt = new Date();
+    }
+}
+
+const payment = new Payment(1);
+payment.unholdPayment();
+console.log(payment)
+const time = payment.getPaymentLifeTime();
+console.log(time);
