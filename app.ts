@@ -1,34 +1,36 @@
-enum PaymentStatus {
-    Holded,
-    Processed,
-    Reversed
-}
+class User {
+    skills: string[];
 
-class Payment {
-    id: number;
-    status: PaymentStatus = PaymentStatus.Holded;
-    createdAt: Date = new Date;
-    updatedAt: Date;
-
-    constructor(id: number) {
-        this.id = id;
+    constructor(skills) {
+        this.skills = skills;
     }
 
-    getPaymentLifeTime(): number {
-        return new Date().getTime() - this.createdAt.getTime();
-    }
-
-    unholdPayment(): void {
-        if (this.status == PaymentStatus.Processed) {
-            throw new Error("payment is already done")
+    addSkill(skill: string): void;  // overload of method
+    addSkill(skill: string[]): void;
+    addSkill( skillOrSkills: string | string[]): void {
+        if (typeof skillOrSkills == 'string') {
+            this.skills.push(skillOrSkills)
+        } else {
+            this.skills = this.skills.concat(skillOrSkills);
         }
-        this.status = PaymentStatus.Reversed;
-        this.updatedAt = new Date();
+
     }
 }
 
-const payment = new Payment(1);
-payment.unholdPayment();
-console.log(payment)
-const time = payment.getPaymentLifeTime();
-console.log(time);
+const user = new User(['a', 'b']);
+user.addSkill('c');
+user.addSkill(['d','e']);
+console.log(user)
+
+function run(distance: number): number;
+function run(distance: string): string; // перегрузка без фигурных скобок
+function run(distance: number | string): number | string {
+    if (typeof distance == 'string') {  // имплементации с фигурными скобками
+        return 'string'
+    } else {
+        return 5607
+    }
+}; 
+
+console.log(run(1));
+console.log(run('1'));

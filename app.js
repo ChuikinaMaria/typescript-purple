@@ -1,29 +1,29 @@
 "use strict";
-var PaymentStatus;
-(function (PaymentStatus) {
-    PaymentStatus[PaymentStatus["Holded"] = 0] = "Holded";
-    PaymentStatus[PaymentStatus["Processed"] = 1] = "Processed";
-    PaymentStatus[PaymentStatus["Reversed"] = 2] = "Reversed";
-})(PaymentStatus || (PaymentStatus = {}));
-class Payment {
-    constructor(id) {
-        this.status = PaymentStatus.Holded;
-        this.createdAt = new Date;
-        this.id = id;
+class User {
+    constructor(skills) {
+        this.skills = skills;
     }
-    getPaymentLifeTime() {
-        return new Date().getTime() - this.createdAt.getTime();
-    }
-    unholdPayment() {
-        if (this.status == PaymentStatus.Processed) {
-            throw new Error("payment is already done");
+    addSkill(skillOrSkills) {
+        if (typeof skillOrSkills == 'string') {
+            this.skills.push(skillOrSkills);
         }
-        this.status = PaymentStatus.Reversed;
-        this.updatedAt = new Date();
+        else {
+            this.skills = this.skills.concat(skillOrSkills);
+        }
     }
 }
-const payment = new Payment(1);
-payment.unholdPayment();
-console.log(payment);
-const time = payment.getPaymentLifeTime();
-console.log(time);
+const user = new User(['a', 'b']);
+user.addSkill('c');
+user.addSkill(['d', 'e']);
+console.log(user);
+function run(distance) {
+    if (typeof distance == 'string') {
+        return 'string';
+    }
+    else {
+        return 5607;
+    }
+}
+; // имплементации с фигурными скобками
+console.log(run(1));
+console.log(run('1'));
