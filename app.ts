@@ -1,14 +1,20 @@
-interface User {
-    name: string
+class User {
+    name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+
 }
 
-const a = {};
-assertUser(a);
-a.name = 'Masha';
+const user = new User('Masha');
+console.log(user);
+user.name = 'Natasha';
+console.log(user);
 
-function assertUser(obj: unknown): asserts obj is User {
-    if (typeof obj === 'object' && !!obj && 'name' in obj) { // !!obj - checking if not null
-        return;
-    } 
-    throw new Error('Not an user');
+class Admin {
+    role: number; //role!: number если "strictPropertyInitialization": true в tsconfig
 }
+
+const admin = new Admin();
+admin.role = 1;
