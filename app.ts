@@ -1,36 +1,22 @@
 class User {
-    skills: string[];
+    _login: string;
+    password: string;
+    createdAt: Date;
 
-    constructor(skills) {
-        this.skills = skills;
+    set login(l: string | number) {
+        this._login = 'from set ' + l;
+        this.createdAt = new Date();
     }
 
-    addSkill(skill: string): void;  // overload of method
-    addSkill(skill: string[]): void;
-    addSkill( skillOrSkills: string | string[]): void {
-        if (typeof skillOrSkills == 'string') {
-            this.skills.push(skillOrSkills)
-        } else {
-            this.skills = this.skills.concat(skillOrSkills);
-        }
-
+    get login() {
+        return this._login
     }
 }
 
-const user = new User(['a', 'b']);
-user.addSkill('c');
-user.addSkill(['d','e']);
-console.log(user)
+const user = new User();
+user.login = 'myLogin'
 
-function run(distance: number): number;
-function run(distance: string): string; // перегрузка без фигурных скобок
-function run(distance: number | string): number | string {
-    if (typeof distance == 'string') {  // имплементации с фигурными скобками
-        return 'string'
-    } else {
-        return 5607
-    }
-}; 
+console.log(user._login);
+console.log(user);
+console.log(user.login);
 
-console.log(run(1));
-console.log(run('1'));
