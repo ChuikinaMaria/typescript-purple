@@ -1,14 +1,39 @@
 "use strict";
-class User {
-    set login(l) {
-        this._login = 'from set ' + l;
+class Payment {
+    constructor(id) {
+        this.status = 'new';
+        this.id = id;
     }
-    get login() {
-        return this._login;
+    pay() {
+        this.status = 'paid';
     }
 }
-const user = new User();
-user.login = 'myLogin';
-console.log(user._login);
-console.log(user);
-console.log(user.login);
+class PersistedPayment extends Payment {
+    constructor() {
+        const id = Math.random();
+        super(id); // обращение к конструктору исходного класса, которому наследует
+    }
+    save() {
+        // сохраняет в базу
+    }
+    pay(date) {
+        super.pay(); // override mathod
+        if (date) {
+            this.paidAt = date;
+        }
+    }
+}
+class User {
+    constructor() {
+        this.name = 'user';
+        console.log(this.name);
+    }
+}
+class Admin extends User {
+    constructor() {
+        super();
+        this.name = 'admin';
+        console.log(this.name);
+    }
+}
+new Admin();
