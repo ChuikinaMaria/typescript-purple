@@ -1,22 +1,34 @@
-class User {
-    _login: string;
-    password: string;
-    createdAt: Date;
+interface ILogger {
+    log(...args): void;
+    error(...args): void;
+}
 
-    set login(l: string | number) {
-        this._login = 'from set ' + l;
-        this.createdAt = new Date();
+class Logger implements ILogger {
+    log(...args: any[]): void {
+        console.log(...args);
     }
-
-    get login() {
-        return this._login
+    async error(...args: any[]): Promise<void> {
+        console.log(...args);
     }
 }
 
-const user = new User();
-user.login = 'myLogin'
+interface IPayable {
+    pay(paymentId: number): void;
+    price?: number;
+}
 
-console.log(user._login);
-console.log(user);
-console.log(user.login);
+interface IDeletable {
+    delete(): void;
+}
 
+class User implements IPayable, IDeletable {
+    delete(): void {
+        throw new Error("Method not implemented.");
+    }
+    pay(paymentId: number): void {
+       ///
+    }
+    price?: number | undefined;
+}
+
+//для тестов - openable, clickable etc...
