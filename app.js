@@ -1,39 +1,18 @@
 "use strict";
-class Payment {
-    constructor(id) {
-        this.status = 'new';
-        this.id = id;
-    }
-    pay() {
-        this.status = 'paid';
-    }
-}
-class PersistedPayment extends Payment {
-    constructor() {
-        const id = Math.random();
-        super(id); // обращение к конструктору исходного класса, которому наследует
-    }
-    save() {
-        // сохраняет в базу
-    }
-    pay(date) {
-        super.pay(); // override mathod
-        if (date) {
-            this.paidAt = date;
-        }
-    }
-}
 class User {
-    constructor() {
-        this.name = 'user';
-        console.log(this.name);
+    constructor(name) {
+        this.name = name;
     }
 }
-class Admin extends User {
-    constructor() {
-        super();
-        this.name = 'admin';
-        console.log(this.name);
+class Users extends Array {
+    searchByName(name) {
+        return this.filter(u => u.name === name);
+    }
+    toString() {
+        return this.map(u => u.name).join(', ');
     }
 }
-new Admin();
+const users = new Users();
+users.push(new User('Masha'));
+users.push(new User('Sasha'));
+console.log(users.toString());

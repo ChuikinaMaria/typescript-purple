@@ -1,63 +1,49 @@
-type PaymentStatus = 'new' | 'paid';
+class User {
+    name: string;
+
+    constructor(name: string) {
+        this.name = name;
+    }
+}
+
+class Users extends Array<User> {  // Наследование
+    searchByName(name: string) {
+        return this.filter(u => u.name === name);
+    }
+
+    override toString(): string {
+        return this.map(u => u.name).join(', ')
+    }
+
+}
+
+const users = new Users();
+users.push(new User('Masha'));
+users.push(new User('Sasha'));
+console.log(users.toString());
+
+class UserList {    // Композиция
+    users: User[];
+
+    push(u: User) {
+        this.users.push(u);
+    }
+}
 
 class Payment {
-    id: number;
-    status: PaymentStatus = 'new';
-
-    constructor(id: number) {
-        this.id = id;
-    }
-
-    pay() {
-        this.status = 'paid';
-    }
+    date: Date;
 }
 
-class PersistedPayment extends Payment {
-    databaseId: number;
-    paidAt: Date;
-
-    constructor() {
-        const id = Math.random();
-        super(id);  // обращение к конструктору исходного класса, которому наследует
-    }
-
-    save() {
-        // сохраняет в базу
-    }
-
-    override pay(date?: Date) {
-        super.pay();   // override mathod
-        if (date) {
-            this.paidAt = date;
-        }
-
-    }
+class UserWithPayment extends Payment {  // наследование, предметные области перемешаны
+    name: string;
 }
 
-class User {
-    name: string = 'user';
+class UserWithPayment2 { // композиция, берем что надо из каждой области (агрегационный класс)
+    user: User;
+    payment: Payment;
 
-    constructor() {
-        console.log(this.name);
-    }
-}
-
-class Admin extends User {
-    name: string = 'admin';
-    constructor() {
-        super();
-        console.log(this.name);
-    }
-}
-
-new Admin();
-new Error();
-
-class HttpError extends Error {
-    code: number
-    constructor(message: string, code?: number) {
-        super(message);
-        this.code = code ?? 500; // Равен code, если нет code, то 500;
+    constructor(user: User, payment: Payment) {
+        this.user = user;
+        this.payment = payment;
     }
 }
