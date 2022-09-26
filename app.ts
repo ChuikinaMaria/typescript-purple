@@ -1,49 +1,34 @@
-class User {
-    name: string;
+class Vehicle {
+    public make: string;   // доступно наследникам и извне
+    private damages: string[]; // недоступно наследникам, недоступно извне
+    private _model: string;
+    protected run: number;  // доступно наследникам, недоступно извне
+    #price: number // # - родное приватное свойство JavaScript
 
-    constructor(name: string) {
-        this.name = name;
+    set model(model: string) {
+        this._model = model;
+        this.#price = 100;
+    }
+
+    get model() {
+        return this._model;
+    }
+
+isPriceEqual(v: Vehicle) {
+    return this.#price === v.#price  // можем проверить эквивалентность двух свойств, доступ есть
+}
+
+    addDamage(damage: string) {
+        this.damages.push(damage);
+    }
+
+}
+
+class EuroTrack extends Vehicle {  // приватные свойства не доступны при наследовании
+    setRun(km: number) {
+        this.run = km/0.62;
+        // this.damages - error
     }
 }
 
-class Users extends Array<User> {  // Наследование
-    searchByName(name: string) {
-        return this.filter(u => u.name === name);
-    }
-
-    override toString(): string {
-        return this.map(u => u.name).join(', ')
-    }
-
-}
-
-const users = new Users();
-users.push(new User('Masha'));
-users.push(new User('Sasha'));
-console.log(users.toString());
-
-class UserList {    // Композиция
-    users: User[];
-
-    push(u: User) {
-        this.users.push(u);
-    }
-}
-
-class Payment {
-    date: Date;
-}
-
-class UserWithPayment extends Payment {  // наследование, предметные области перемешаны
-    name: string;
-}
-
-class UserWithPayment2 { // композиция, берем что надо из каждой области (агрегационный класс)
-    user: User;
-    payment: Payment;
-
-    constructor(user: User, payment: Payment) {
-        this.user = user;
-        this.payment = payment;
-    }
-}
+new Vehicle()
