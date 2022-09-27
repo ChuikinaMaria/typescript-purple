@@ -1,20 +1,29 @@
-class UserService {
-    // static name: string = 'dfg' // без статика работает, со статиком нет (есть встроенный name)
+class Payment {
+    private date: Date = new Date();
 
-    private static db: any;
-
-    static async getUser(id: number) {  // this - обращение к инстансу
-        return UserService.db.findById(id);  // здесь обращение к объекту (классу)
+    getDate(this: Payment, a?: number) {
+        return this.date;
     }
-    create(){};
 
-    static {
-        UserService.db = 'dfgd'  // не может быть асинх
+    getDateArrow = () => { // стрелочная ф-я несет контекст с собой
+        return this.date
     }
 }
+ 
+const p = new Payment();
 
-UserService.db  // не нужно создават экземпляр (instance) класса, чтобы обратиться к свойству
-UserService.getUser(1);
+const user = {
+    id: 1,
+    paymentDate: p.getDate.bind(p), // bind передает контекст функции, что this. будет взято из Payment
+    paymentDateArrow: p.getDateArrow
+}   
+console.log(p.getDate(1));                               
+console.log(user.paymentDate(1));
+console.log(user.paymentDateArrow());
 
-const inst = new UserService()
-inst.create().getUser
+class PaymentPersistent extends Payment {
+    save() {
+        return super.getDate() // return this.getDateArrow() 
+    }// super - обращение к прототипу, а стрелочная функция не в прототипе
+}
+console.log(new PaymentPersistent().save());
