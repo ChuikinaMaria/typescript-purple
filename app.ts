@@ -1,29 +1,27 @@
-class Payment {
-    private date: Date = new Date();
+class UserBuilder {
+    name: string;
 
-    getDate(this: Payment, a?: number) {
-        return this.date;
+    setName(name: string): this{
+        this.name = name;
+        return this;
     }
 
-    getDateArrow = () => { // стрелочная ф-я несет контекст с собой
-        return this.date
+    isAdmin(): this is AdminBuilder {
+        return this instanceof AdminBuilder;
     }
 }
- 
-const p = new Payment();
 
-const user = {
-    id: 1,
-    paymentDate: p.getDate.bind(p), // bind передает контекст функции, что this. будет взято из Payment
-    paymentDateArrow: p.getDateArrow
-}   
-console.log(p.getDate(1));                               
-console.log(user.paymentDate(1));
-console.log(user.paymentDateArrow());
-
-class PaymentPersistent extends Payment {
-    save() {
-        return super.getDate() // return this.getDateArrow() 
-    }// super - обращение к прототипу, а стрелочная функция не в прототипе
+class AdminBuilder extends UserBuilder {
+    roles: string[];
 }
-console.log(new PaymentPersistent().save());
+
+const res = new UserBuilder().setName('Masha');
+const res2 = new AdminBuilder().setName('Masha');
+
+let user: UserBuilder | AdminBuilder = new UserBuilder();
+
+if (user.isAdmin()) {
+    console.log(user);
+} else {
+    console.log(user);
+}
