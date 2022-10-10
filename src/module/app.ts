@@ -33,23 +33,29 @@ function getSplitedHalf<T>(data: Array<T>): Array<T> {
 
 getSplitedHalf<number>([1,2,3]);
 
-function castToString<T>(data: T): string | undefined {
-    if(Array.isArray(data)) {
-        return data.toString()
-    }
-    switch (typeof data) {
-        case "string":
-            return data;
-        case "number":
-        case "symbol":
-        case "bigint":
-        case "boolean":
-        case "function":
-            return data.toString()
-        case "object":
-            return JSON.stringify(data);
+const split: <T>(data: Array<T>) => Array<T> = getSplitedHalf;
+const split2: <Y>(data: Array<Y>) => Array<Y> = getSplitedHalf;
 
-        default: return undefined;
+interface IlogLine<T> {
+    timeStamp: Date;
+    data: T
+}
+
+type logLineType<T> = {
+    timeStamp: Date;
+    data: T
+}
+
+const logLineI: IlogLine<{a: number}> = {
+    timeStamp: new Date(),
+    data: {
+        a: 1
     }
 }
-console.log(castToString(1));
+
+const logLineT: logLineType<{a: number}> = {
+    timeStamp: new Date(),
+    data: {
+        a: 1
+    }
+}
